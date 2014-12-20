@@ -4,7 +4,8 @@ var express = require('express')
   , Promise = require('promise')
 
 // mock for heroku
-//var process = process || JSON.parse( fs.readFileSync('./mock_process.json') )
+if( typeof process == 'undefined' )
+    var process = JSON.parse( fs.readFileSync('./mock_process.json') )
 
 
 var Mongo = {
@@ -58,11 +59,12 @@ var app = express()
 
 app.get(/^\/tracking\/(\w+)\.png$/, function(req, res){
     var event = req.params[0]
-
-    Mongo.insert( event )
+    console.log(event)
+    //Mongo.insert( event )
     res.status(200).send()
 })
-
+app.listen.bind(app, 80)()
+/*
 Mongo.connect()
 .then( app.listen.bind(app, 80) )
-.then( null, console.log.bind(console) )
+.then( null, console.log.bind(console) )*/
