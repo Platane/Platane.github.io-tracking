@@ -1,0 +1,17 @@
+{
+    "name": "platane-me-metric",
+    "version": "0.1.0",
+    "author": "Platane <me@platane.me>",
+    "license": "MIT",
+
+    "dependencies": {
+        "express" : "*",
+        "mongodb" : "*",
+        "Promise" : "*"
+    },
+
+    "engines": {
+        "node": ">=0.8.0"
+    }
+
+}
