@@ -11,6 +11,7 @@ var Mongo = {
     connect : function(){
         return new Promise(function(resolve, reject){
             var that = this
+            console.log( process.env.MONGOLAB_URI )
             MongoClient.connect( process.env.MONGOLAB_URI, function(err, db) {
                 if( err )
                     reject( err )
