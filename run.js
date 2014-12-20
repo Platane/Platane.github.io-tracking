@@ -63,7 +63,7 @@ app.get(/^\/tracking\/(\w+)\.png$/, function(req, res){
     //Mongo.insert( event )
     res.status(200).send()
 })
-app.listen.bind(app, 80)()
+//app.listen.bind(app, 80)()
 /*
 Mongo.connect()
 .then( app.listen.bind(app, 80) )
