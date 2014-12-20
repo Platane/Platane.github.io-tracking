@@ -1,0 +1,23 @@
+{
+    "name": "platane-me-metric",
+    "version": "0.1.0",
+    "author": "Platane <me@platane.me>",
+    "license": "MIT",
+
+    "dependencies": {
+        "express" : "*",
+        "mongodb" : "*",
+        "promise" : "*"
+    },
+
+    "main" : "run.js",
+
+    "engines": {
+        "node": "0.10.x"
+    },
+
+    "scripts": {
+        "start": "node run.js"
+    }
+
+}
