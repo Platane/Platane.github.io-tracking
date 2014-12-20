@@ -65,7 +65,8 @@ app.get(/^\/tracking\/(\w+)\.png$/, function(req, res){
 })
 
 console.log('starting ...')
-//app.listen.bind(app, 80)()
+app.listen(80)
+
 /*
 Mongo.connect()
 .then( app.listen.bind(app, 80) )
