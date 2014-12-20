@@ -13,7 +13,11 @@
     "main" : "./run.js",
 
     "engines": {
-        "node": "1.x"
+        "node": "0.10.x"
+    },
+
+    "scripts": {
+        "start": "node ./run.js",
     }
 
 }

@@ -1,0 +1,5 @@
+{
+    "env" : {
+        "MONGOLAB_URI" : "mongo//"
+    }
+}

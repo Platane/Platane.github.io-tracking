@@ -1,7 +1,0 @@
-{
- "user": "heroku",
- "pass": "jambon",
- "host" : "ds027491.mongolab.com",
- "port" : 27491,
- "database" : "heroku_app32695383"
-}

@@ -3,30 +3,15 @@ var express = require('express')
   , fs = require('fs')
   , Promise = require('promise')
 
+// mock for heroku
+var process = process || JSON.parse( fs.readFileSync('./mock_process.json') )
 
-// set up mongo
-
-console.log('grab mogoDB configuration')
-
-var mongo_connf = JSON.parse( fs.readFileSync('./mongoDB_conf.json') )
-
-console.log( mongo_connf )
-
-var composeMongoDBurl = function( conf ){
-    // TODO multiple host/port
-    return 'mongodb://'+conf.user+':'+conf.pass+'@'+conf.host+':'+conf.port+'/'+conf.database
-}
-
-var mongo_url = composeMongoDBurl( mongo_connf )
-var mongoDB
-
-console.log( mongo_url )
 
 var Mongo = {
     connect : function(){
         return new Promise(function(resolve, reject){
             var that = this
-            MongoClient.connect(mongo_url, function(err, db) {
+            MongoClient.connect( process.env.MONGOLAB_URI, function(err, db) {
                 if( err )
                     reject( err )
                 else {
