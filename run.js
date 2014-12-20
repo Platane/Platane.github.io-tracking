@@ -4,7 +4,7 @@ var express = require('express')
   , Promise = require('promise')
 
 // mock for heroku
-var process = process || JSON.parse( fs.readFileSync('./mock_process.json') )
+//var process = process || JSON.parse( fs.readFileSync('./mock_process.json') )
 
 
 var Mongo = {
