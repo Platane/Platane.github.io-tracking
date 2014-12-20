@@ -3,10 +3,6 @@ var express = require('express')
   , fs = require('fs')
   , Promise = require('promise')
 
-// mock for heroku
-if( typeof process == 'undefined' )
-    var process = JSON.parse( fs.readFileSync('./mock_process.json') )
-
 
 var Mongo = {
     connect : function(){
