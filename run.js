@@ -1,7 +1,7 @@
 var express = require('express')
   , MongoClient = require('mongodb').MongoClient
   , fs = require('fs')
-  , Promise = require('Promise')
+  , Promise = require('promise')
 
 
 // set up mongo

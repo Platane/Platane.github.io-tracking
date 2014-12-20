@@ -7,7 +7,7 @@
     "dependencies": {
         "express" : "*",
         "mongodb" : "*",
-        "Promise" : "*"
+        "promise" : "*"
     },
 
     "main" : "./run.js",
