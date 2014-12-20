@@ -56,6 +56,11 @@ var Mongo = {
             );
         })
     },
+    close : function(){
+        if( this.db )
+            this.db.close()
+        this.db = null
+    }
 }
 
 
