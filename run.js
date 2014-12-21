@@ -49,7 +49,7 @@ var Mongo = {
 
 var app = express()
 
-app.get(/^\/tracking\/(\w+)\.png$/, function(req, res){
+app.get(/^\/tracking\/([0-9A-z_-]+)\.png$/, function(req, res){
     var event = req.params[0]
     Mongo.insertEvent( event )
     res.status(200).send()
