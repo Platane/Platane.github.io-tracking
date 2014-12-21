@@ -51,7 +51,6 @@ var app = express()
 
 app.get(/^\/tracking\/(\w+)\.png$/, function(req, res){
     var event = req.params[0]
-
     Mongo.insert( event )
     res.status(200).send()
 })
