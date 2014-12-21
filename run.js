@@ -51,12 +51,17 @@ var app = express()
 
 app.get(/^\/tracking\/(\w+)\.png$/, function(req, res){
     var event = req.params[0]
-    Mongo.insert( event )
+    Mongo.insertEvent( event )
     res.status(200).send()
 })
 
-console.log('starting ...')
+console.log('connect to mongoDB...')
 
 Mongo.connect()
-.then( app.listen.bind(app, process.env.PORT || 80) )
+.then( function(){
+
+    console.log('starting server...')
+
+    app.listen( process.env.PORT || 80)
+})
 .then( null, console.log.bind(console) )
