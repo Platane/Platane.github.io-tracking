@@ -22,12 +22,10 @@ var Mongo = {
             var collection = this.db.collection('events')
 
             collection.insert(
-                [
-                    {
-                        eventName: eventName,
-                        date: date || Date.now(),
-                    },
-                ],
+                {
+                    eventName: eventName,
+                    date: date || Date.now(),
+                },
                 function(err, result) {
                     if( err )
                         reject( err )
@@ -53,7 +51,7 @@ var app = express()
 
 app.get(/^\/tracking\/(\w+)\.png$/, function(req, res){
     var event = req.params[0]
-    
+
     Mongo.insert( event )
     res.status(200).send()
 })
