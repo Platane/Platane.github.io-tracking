@@ -110,7 +110,13 @@ app.get('/events', function(req, res){
 
 })
 
-
+// static file serving
+app.get('/script.js', function(req, res) {
+    res.sendFile('script.js', {root: './front-dist'})
+})
+app.get('/', function(req, res) {
+    res.sendFile('index.html', {root: './front-src'})
+})
 
 
 

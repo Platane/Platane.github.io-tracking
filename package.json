@@ -10,6 +10,11 @@
         "promise" : "*"
     },
 
+    "devDependencies": {
+        "webpack" : "*",
+        "babel-loader" : "*"
+    },
+
     "main" : "run.js",
 
     "engines": {
@@ -17,6 +22,7 @@
     },
 
     "scripts": {
+        "prepublish": "webpack",
         "start": "node run.js"
     }
 
