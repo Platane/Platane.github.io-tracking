@@ -35,6 +35,46 @@ var Mongo = {
             );
         })
     },
+    getEvents : function(options){
+
+
+        var query = {}
+
+        if ( options.startDate )
+          (query.date = query.date || {} )[ '$gte' ] = 0|options.startDate
+
+        if ( options.endDate )
+          (query.date = query.date || {} )[ '$lte' ] = 0|options.endDate
+
+        if ( options.eventName )
+          query.eventName = options.eventName
+
+
+        var dbOptions = {sort: ['date','asc'] }
+
+        return new Promise(function(resolve, reject){
+
+            var collection = this.db.collection('events')
+            collection.find( query, dbOptions, function( err, cursor ){
+
+                if( err )
+                    return reject( err )
+
+                var res = {}
+
+                cursor.each( function( err, doc ){
+
+                    if ( err )
+                        return reject( err )
+
+                    if ( !doc )
+                        return resolve( res )
+
+                    ;( res[ doc.eventName ] = res[ doc.eventName ] || [] ).push( doc.date )
+                })
+            })
+        })
+    },
     close : function(){
         if( this.db )
             this.db.close()
@@ -49,11 +89,30 @@ var Mongo = {
 
 var app = express()
 
+// insert event route
 app.get(/^\/tracking\/([0-9A-z_-]+)\.png$/, function(req, res){
     var event = req.params[0]
     Mongo.insertEvent( event )
     res.status(200).send()
 })
+
+// get stats route
+app.get('/events', function(req, res){
+
+    Mongo.getEvents(req.query || {})
+
+    .then( function( result ){
+        res.status(200).send( result )
+    })
+    .catch( function( err ){
+        res.status(500).send( err )
+    })
+
+})
+
+
+
+
 
 console.log('connect to mongoDB...')
 
