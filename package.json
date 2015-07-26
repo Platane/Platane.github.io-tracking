@@ -18,11 +18,11 @@
     "main" : "run.js",
 
     "engines": {
-        "node": "0.10.x"
+        "node": "0.x"
     },
 
     "scripts": {
-        "prepublish": "webpack",
+        "prepublish": "node ./node_modules/webpack/bin/webpack.js",
         "start": "node run.js"
     }
 
