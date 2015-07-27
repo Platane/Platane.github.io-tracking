@@ -23,7 +23,7 @@
     },
 
     "scripts": {
-        "prepublish": "node ./node_modules/webpack/bin/webpack.js",
+        "postinstall": "node ./node_modules/webpack/bin/webpack.js",
         "start": "node run.js"
     }
 
