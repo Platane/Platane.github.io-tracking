@@ -1,6 +1,7 @@
 var express = require('express')
   , MongoClient = require('mongodb').MongoClient
   , Promise = require('promise')
+  , path = require('path')
 
 
 var Mongo = {
@@ -112,13 +113,13 @@ app.get('/events', function(req, res){
 
 // static file serving
 app.get('/script.js', function(req, res) {
-    res.sendFile('script.js', {root: './front-dist'})
+    res.sendFile('script.js', {root: path.join(__dirname, 'front-dist') })
 })
 app.get('/script.js.map', function(req, res) {
-    res.sendFile('script.js.map', {root: './front-dist'})
+    res.sendFile('script.js.map', {root: path.join(__dirname, 'front-dist') })
 })
 app.get('/', function(req, res) {
-    res.sendFile('index.html', {root: './front-src'})
+    res.sendFile('index.html', {root: path.join(__dirname, 'front-src') })
 })
 
 
