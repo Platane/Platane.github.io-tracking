@@ -8,12 +8,13 @@
         "express" : "*",
         "mongodb" : "*",
         "promise" : "*",
-        "react" : "*"
+        "react" : "*",
+        
+        "webpack" : "*",
+        "babel-loader" : "*"
     },
 
     "devDependencies": {
-        "webpack" : "*",
-        "babel-loader" : "*"
     },
 
     "main" : "run.js",
