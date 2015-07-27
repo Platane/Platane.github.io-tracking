@@ -114,6 +114,9 @@ app.get('/events', function(req, res){
 app.get('/script.js', function(req, res) {
     res.sendFile('script.js', {root: './front-dist'})
 })
+app.get('/script.js.map', function(req, res) {
+    res.sendFile('script.js.map', {root: './front-dist'})
+})
 app.get('/', function(req, res) {
     res.sendFile('index.html', {root: './front-src'})
 })
