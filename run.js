@@ -71,7 +71,7 @@ var Mongo = {
                     if ( !doc )
                         return resolve( res )
 
-                    ;( res[ doc.eventName ] = res[ doc.eventName ] || [] ).push( doc.date )
+                    ;( res[ doc.eventName ] = res[ doc.eventName ] || [] ).push( 0| (doc.date /1000)  )
                 })
             })
         })

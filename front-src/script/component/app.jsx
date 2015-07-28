@@ -6,6 +6,7 @@ export class App extends Component {
     static childContextTypes = {
         transport: PropTypes.object,
         graphPreparer: PropTypes.object,
+        camera: PropTypes.object,
     }
 
     componentWillMount(){
@@ -16,6 +17,7 @@ export class App extends Component {
         return {
             transport: this.props.transport,
             graphPreparer: this.props.graphPreparer,
+            camera: this.props.camera,
         }
     }
 
