@@ -5,7 +5,7 @@ export class Camera extends EventEmitter {
     constructor(){
         super()
 
-        this.grain = 3600*24*7
+        this.grain = 3600*24*7 * 2
     }
 
     getIntervalle(){

@@ -1,5 +1,8 @@
 import React, {Component, PropTypes} from "react"
+import {FatLine} from "./fatLine.jsx"
 
+
+console.log( FatLine )
 
 const colors=[
     'purple',
@@ -59,20 +62,45 @@ export class Graph extends React.Component {
         const start = this.state.start
         const end = this.state.end
 
+        const selected = this.state.selected || 0
+
         const viewport = {x: 500, y:500}
 
-        return (
-            <svg xmlns="http://www.w3.org/svg/2000" width={viewport.x} height={viewport.x}>
 
-                {Object.keys( points ).map( (x, i) =>
-                    <Curve  key={x}
-                            label={ x }
-                            points={ points[x] }
-                            start={ start }
-                            end={ end }
-                            viewport={ viewport }
-                            color={ colors[i%colors.length] } />
+        const lines = Object.keys( points )
+            .map( x => {
+
+                const maxY = points[ x ].reduce( (max, y) =>
+                    Math.max( max, y ), 0.5 )
+
+                return points[ x ]
+                    .map( (y, x) =>
+                        ({
+                            x: ( x/(end-start) * 0.8 + 0.1 )  *viewport.x,
+                            y: ( 1 - y/maxY * 0.8 - 0.1 )  *viewport.y
+                        })
+                    )
+            })
+
+
+                    // <Curve  key={x}
+                    //         label={ x }
+                    //         points={ points[x] }
+                    //         start={ start }
+                    //         end={ end }
+                    //         viewport={ viewport }
+                    //         color={ colors[i%colors.length] } />
+        return (
+            <svg xmlns="http://www.w3.org/svg/2000" width={viewport.x} height={viewport.x} style={ {background: '#d88'} }>
+
+                {Object.keys( points )
+                    .map( (x, i) =>
+                        i != selected && <polyline  points={ lines[i].reduce( (path, p) => path + p.x +','+ p.y+ ' ', '' ) } style={ {fill: 'none', stroke:colors[i], strokeLinecap: 'round', strokeWidth: 0.6} } />
+
                 )}
+
+                <FatLine line={ lines[selected] } />
+
 
             </svg>
         )
