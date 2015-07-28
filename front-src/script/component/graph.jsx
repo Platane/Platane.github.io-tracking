@@ -2,13 +2,57 @@ import React, {Component, PropTypes} from "react"
 import {FatLine} from "./fatLine.jsx"
 
 
-console.log( FatLine )
-
 const colors=[
     'purple',
     'yellow',
     'cyan',
 ]
+
+
+const tremble = ( line, callback, options = {} ) => {
+
+    const originalLine = line.slice()
+
+    const duration = options.duration || 3000
+    const mean = line.reduce( (sum, x) => sum + x, 0 ) / line.length
+    const dispersion = mean * 0.03
+
+    const params = line
+        .map( x => ({
+            x: x,
+            w: 0.01 * ( Math.random() * 0.4 + 0.8 ),
+            A:  ( x*0.08 + dispersion ) * ( Math.random() * 0.4 + 0.8 ) * 5,
+            phy: Math.random() * Math.PI
+        }) )
+
+    let start = Date.now()
+    let run = true
+    const cycle = () => {
+
+        if (!run)
+            return
+
+        const t = Date.now() - start
+
+        if ( t> duration)
+            return callback( params.map( o => o.x ) )
+
+        const attenuation = Math.pow(1 - t/ duration, 3)
+
+        const distordLine = params
+            .map( o => o.x + Math.sin( o.phy + o.w * t ) * o.A * attenuation )
+
+        callback( distordLine )
+
+        requestAnimationFrame( cycle )
+    }
+
+    requestAnimationFrame( cycle )
+
+    // cancel
+    return () => run = false
+}
+
 
 export class Graph extends React.Component {
 
@@ -22,14 +66,45 @@ export class Graph extends React.Component {
 
         super()
 
-        this.state = {}
+        this.state = {
+            points: {}
+        }
 
-        this._update = () =>
+        let cancelTremble = {}
+
+        this._update = () => {
+
+            const graphPreparer = this.context.graphPreparer
+            const camera = this.context.camera
+
+            const points = graphPreparer.computeDot()
+
+            for( let i in cancelTremble )
+                cancelTremble[ i ]()
+
+            for( let i in points )
+                cancelTremble[ i ] = tremble( points[i], line => {
+                    let points = this.state.points || {}
+                    points[ i ] = line
+                    this.setState({points: points})
+                })
+
+            const maxY = Object.keys( points )
+                .reduce( (max, x) => {
+                    const maxLine = points[ x ].reduce( (max, y) =>
+                        Math.max( max, y ), 0.5 )
+                    return Math.max( max, maxLine )
+                }, 0.5 )
+
             this.setState({
-                points: this.context.graphPreparer.computeDot(),
-                start: this.context.camera.getIntervalle().start/ this.context.camera.getGrain(),
-                end: this.context.camera.getIntervalle().end/ this.context.camera.getGrain(),
+                start: camera.getIntervalle().start/ camera.getGrain(),
+                end: camera.getIntervalle().end/ camera.getGrain(),
+                maxY: maxY
+
             })
+
+        }
+
     }
 
     componentWillMount(){
@@ -41,9 +116,9 @@ export class Graph extends React.Component {
 
         this._update()
 
+        new Promise( resolve => setTimeout( resolve, 100 ) )
 
-
-        transport.getEvents()
+        .then( ::transport.getEvents )
 
         .then( res =>
             graphPreparer.points = res )
@@ -57,10 +132,11 @@ export class Graph extends React.Component {
 
     render(){
 
-        const points = this.state.points
+        const points = this.state.points || {}
 
         const start = this.state.start
         const end = this.state.end
+        const maxY = this.state.maxY
 
         const selected = this.state.selected || 0
 
@@ -69,9 +145,6 @@ export class Graph extends React.Component {
 
         const lines = Object.keys( points )
             .map( x => {
-
-                const maxY = points[ x ].reduce( (max, y) =>
-                    Math.max( max, y ), 0.5 )
 
                 return points[ x ]
                     .map( (y, x) =>
@@ -99,7 +172,7 @@ export class Graph extends React.Component {
 
                 )}
 
-                <FatLine line={ lines[selected] } />
+                { lines[selected] && <FatLine line={ lines[selected] } /> }
 
 
             </svg>
