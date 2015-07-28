@@ -10,7 +10,7 @@ export class FatLine extends React.Component {
         const lineWidth = this.props.lineWidth || height * 0.2
 
         let extrudDir = {x:0, y:-1}
-        let shadowDir = {x:0.707, y:0.707}
+        let shadowDir = {x:0.507, y:0.707}
 
         extrudDir.x *= height
         extrudDir.y *= height

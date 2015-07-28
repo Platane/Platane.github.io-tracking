@@ -64,7 +64,7 @@ export class Graph extends React.Component {
 
         const selected = this.state.selected || 0
 
-        const viewport = {x: 500, y:500}
+        const viewport = {x: window.innerWidth, y: window.innerHeight}
 
 
         const lines = Object.keys( points )
@@ -76,8 +76,8 @@ export class Graph extends React.Component {
                 return points[ x ]
                     .map( (y, x) =>
                         ({
-                            x: ( x/(end-start) * 0.8 + 0.1 )  *viewport.x,
-                            y: ( 1 - y/maxY * 0.8 - 0.1 )  *viewport.y
+                            x: ( x/(end-start) * 0.7 + 0.15 )  *viewport.x,
+                            y: ( 1 - y/maxY * 0.7 - 0.15 )  *viewport.y
                         })
                     )
             })
@@ -91,7 +91,7 @@ export class Graph extends React.Component {
                     //         viewport={ viewport }
                     //         color={ colors[i%colors.length] } />
         return (
-            <svg xmlns="http://www.w3.org/svg/2000" width={viewport.x} height={viewport.x} style={ {background: '#d88'} }>
+            <svg xmlns="http://www.w3.org/svg/2000" width={viewport.x} height={viewport.y} style={ {background: '#d88'} }>
 
                 {Object.keys( points )
                     .map( (x, i) =>
