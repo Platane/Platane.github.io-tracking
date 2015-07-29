@@ -9,7 +9,8 @@
         "mongodb" : "*",
         "promise" : "*",
         "react" : "*",
-        
+        "flux" : "*",
+
         "webpack" : "*",
         "babel-loader" : "*"
     },
@@ -25,7 +26,8 @@
 
     "scripts": {
         "postinstall": "node ./node_modules/webpack/bin/webpack.js",
-        "start": "node run.js"
+        "start": "node run.js",
+        "dev": "node ./node_modules/webpack/bin/webpack.js --progress --watch -d"
     }
 
 }

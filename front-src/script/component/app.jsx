@@ -1,12 +1,22 @@
 import React, {Component, PropTypes} from "react"
-import { Graph } from './graph.jsx'
+import { Graph } from './graph/graph.jsx'
 
 export class App extends Component {
 
     static childContextTypes = {
-        transport: PropTypes.object,
-        graphPreparer: PropTypes.object,
-        camera: PropTypes.object,
+        action: PropTypes.object,
+        graphLinesStore: PropTypes.object,
+        graphCameraStore: PropTypes.object,
+        pointsStore: PropTypes.object,
+        selectedStore: PropTypes.object,
+    }
+
+    constructor(){
+        super()
+
+        this.state = {
+            selected: null
+        }
     }
 
     componentWillMount(){
@@ -14,17 +24,16 @@ export class App extends Component {
     }
 
     getChildContext() {
-        return {
-            transport: this.props.transport,
-            graphPreparer: this.props.graphPreparer,
-            camera: this.props.camera,
-        }
+        let ctx = {}
+        for ( let i in App.childContextTypes )
+            ctx[i] = this.props[i]
+        return ctx
     }
 
     render(){
         return (
 
-            <Graph/>
+            <Graph width={500} height={500}/>
 
         )
     }
