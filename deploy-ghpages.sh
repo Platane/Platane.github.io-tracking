@@ -17,7 +17,7 @@ cp ./front-dist/* ./
 cp ./front-src/index.html ./
 
 # keep ignoring files
-git checkout -- ./gitignore
+git checkout gh-pages -- ./gitignore
 git rm -r --cached .
 git add .
 
