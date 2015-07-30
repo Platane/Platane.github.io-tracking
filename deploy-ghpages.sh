@@ -19,7 +19,14 @@ cp ./front-src/index.html ./
 # keep ignoring files
 git checkout gh-pages -- ./gitignore
 git rm -r --cached .
-git add .
+# /!\ can't do git add . here because the .sh script is running, 
+#   it will fail with no permission as the file is locked
+#   let's add everything but the .sh script
+git add ./*.js
+git add ./*.html
+git add ./.gitignore
+git add ./README.md
+git add ./package.json
 
 # commit and push
 git commit -m "deploy"
