@@ -132,10 +132,10 @@ app.get('/', function(req, res) {
 console.log('connect to mongoDB...')
 
 Mongo.connect()
+.catch( console.log.bind(console) )
 .then( function(){
 
     console.log('starting server...')
 
     app.listen( process.env.PORT || 80)
 })
-.then( null, console.log.bind(console) )
