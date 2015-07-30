@@ -27,9 +27,6 @@ git add ./*.html
 git add ./.gitignore
 git add ./README.md
 git add ./package.json
-git add ./run.js
-git add ./front-src
-git add ./front-dist
 
 # commit and push
 git commit -m "deploy"
