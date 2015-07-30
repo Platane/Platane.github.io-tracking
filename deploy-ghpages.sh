@@ -8,6 +8,6 @@ cp ./front-dist/* ./
 cp ./front-src/index.html ./
 cp --force ./.gitignore-ghpages ./.gitignore
 git add .
-git comit -m "deploy"
+git commit -m "deploy"
 git push
 git checkout master
