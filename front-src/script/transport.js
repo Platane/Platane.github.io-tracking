@@ -1,7 +1,7 @@
 import { EventEmitter} from 'events'
 
 
-
+const endPoint = 'https://platane-me-dynamic-content.herokuapp.com/'
 
 export class Transport extends EventEmitter {
 
@@ -10,7 +10,7 @@ export class Transport extends EventEmitter {
     }
 
     getEvents(){
-        return fetch('./events')
+        return fetch( endPoint+'./events' )
         .then( res => {
             if (res.status !== 200)
                 return Promise.resolve( 'response status is not 200' )
