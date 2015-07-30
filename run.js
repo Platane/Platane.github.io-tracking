@@ -1,6 +1,5 @@
 var express = require('express')
   , MongoClient = require('mongodb').MongoClient
-  , Promise = require('promise')
   , path = require('path')
 
 
@@ -103,10 +102,16 @@ app.get('/events', function(req, res){
     Mongo.getEvents(req.query || {})
 
     .then( function( result ){
-        res.status(200).send( result )
+        res
+        .header("Access-Control-Allow-Origin", "*")
+        .status(200)
+        .send(result)
     })
     .catch( function( err ){
-        res.status(500).send( err )
+        res
+        .header("Access-Control-Allow-Origin", "*")
+        .status(500)
+        .send( err )
     })
 
 })
