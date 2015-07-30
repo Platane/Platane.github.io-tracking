@@ -36,7 +36,7 @@ module.exports = {
                 test: /\.js$/,
                 exclude: /node_modules/,
                 loaders: [
-                    'babel?stage=0&sourceMaps="inline"'
+                    'babel?stage=0&sourceMaps="both"'
                 ],
             },
 
@@ -44,7 +44,7 @@ module.exports = {
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
                 loaders: [
-                    'babel?stage=0&sourceMaps="inline"'
+                    'babel?stage=0&sourceMaps="both"'
                 ],
             }
 
