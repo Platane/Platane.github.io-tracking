@@ -7,6 +7,7 @@ npm install
 cp ./front-dist/* ./
 cp ./front-src/index.html ./
 cp --force ./.gitignore-ghpages ./.gitignore
+git rm - --cached .
 git add .
 git commit -m "deploy"
 git push
