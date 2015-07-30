@@ -21,6 +21,17 @@ export class App extends Component {
 
     componentWillMount(){
 
+        this._update = () =>
+            this.setState({ selected: this.props.selectedStore.selected })
+
+        this.props.selectedStore.on('change', this._update )
+
+        this._update()
+    }
+
+    componentWillUnmount(){
+
+        this.props.selectedStore.off('change', this._update )
     }
 
     getChildContext() {
@@ -33,7 +44,7 @@ export class App extends Component {
     render(){
         return (
 
-            <Graph width={500} height={500}/>
+            <Graph selected={this.state.selected} width={500} height={500}/>
 
         )
     }

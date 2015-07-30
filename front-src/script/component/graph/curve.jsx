@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from "react"
+import {renderFat, renderBasic} from "./curveBuilder.jsx"
 
 const computeLine = function( ){
 
@@ -15,17 +16,6 @@ const computeLine = function( ){
     this.setState({line: line})
 }
 
-const renderFat = ( points, options = {} ) => {
-
-}
-const renderBasic = ( points, options = {} ) =>
-    <polyline
-        points={ points.reduce( (path,p) => path+p.x+','+p.y+' ', '') }
-        style={ {
-            fill: 'none',
-            stroke: options.color || '#555',
-            strokeWidth: options.tickness || 1,
-            strokeLinecap: 'round' } } />
 
 export class Curve extends Component {
 
@@ -67,9 +57,10 @@ export class Curve extends Component {
     render(){
         switch ( this.props.type ) {
         case 'fat' :
+            return renderFat( this.state.line, {color: this.props.color} )
         case 'basic' :
         default :
-            return renderBasic( this.state.line )
+            return renderBasic( this.state.line, {color: this.props.color} )
         }
     }
 }
