@@ -1,8 +1,0 @@
-front-dist
-front-src
-run.js
-webpack.config.js
-.gitignore-ghpages
-deploy-ghpages.sh
-node_modules
-npm-debug.log
