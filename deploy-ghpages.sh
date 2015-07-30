@@ -17,6 +17,9 @@ cp ./front-dist/* ./
 cp ./front-src/index.html ./
 
 # keep ignoring files
+# /!\ please do it
+git checkout gh-pages -- ./gitignore
+git checkout gh-pages -- ./gitignore
 git checkout gh-pages -- ./gitignore
 git rm -r --cached .
 # /!\ can't do git add . here because the .sh script is running, 
