@@ -20,10 +20,10 @@ const recomputeLines = function(){
     )
 
     const maxY = events
-    .reduce( (max,event) => Math.max( max||0,
-        this.computedLines[ event ].reduce( (max,x) => Math.max( max||0, x ) )
+    .reduce( (max,event) => Math.max( max,
+        this.computedLines[ event ].reduce( (max,x) => Math.max( max, x )  ,0)
         )
-    )
+    ,0)
 
     events
     .forEach( event =>
