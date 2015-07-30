@@ -30,7 +30,7 @@ import { Transport } from './transport'
 
 let transport = new Transport
 
-new Promise( resolve => setTimeout( resolve, 2000 ) )
+new Promise( resolve => setTimeout( resolve, 200 ) )
 
 .then( ::transport.getEvents )
 
