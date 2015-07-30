@@ -4,6 +4,17 @@ var webpack = require('webpack')
 var production = process.argv.indexOf('--production') > -1
 
 
+var plugins = []
+
+if ( production )
+    plugins.push(
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false,
+            },
+        })
+    )
+
 module.exports = {
 
     entry: {
@@ -38,6 +49,8 @@ module.exports = {
             }
 
         ]
-    }
+    },
+
+    plugins: plugins
 
 }
