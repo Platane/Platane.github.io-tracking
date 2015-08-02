@@ -21,35 +21,71 @@ const colorScheme = [
 
 export class Graph extends Component {
 
+    static contextTypes = {
+        graphCameraStore: PropTypes.object,
+        action: PropTypes.object,
+    }
+
+    mouseDown( event ){
+        this._originX = event.pageX
+        this._dragging = true
+        this._originStart = this.context.graphCameraStore.start
+
+        const timeWidth = this.context.graphCameraStore.end - this.context.graphCameraStore.start
+
+        this._ratio = timeWidth / this.props.width
+
+        this.context.action.startMovingGraphCamera()
+    }
+    mouseMove( event ){
+
+        if (!this._dragging)
+            return
+
+        const newStart = ( this._originX - event.pageX ) * this._ratio + this._originStart
+
+        this.context.action.translateGraphCamera( newStart )
+    }
+    mouseUp( event ){
+        this._dragging = false
+        this.context.action.endMovingGraphCamera()
+    }
+
     render(){
 
         const { width, height, selected } = this.props
 
-        const innerWidth = width * 0.8
-        const innerheight = height * 0.8
+        const scale = 0.8
+
+        const innerWidth = width * scale
+        const innerheight = height * scale
 
         const colorByEvent = events.reduce( (o, x, i) =>
             (o[ x ] = colorScheme[ i % colorScheme.length ]) && o, {})
 
         return (
 
-            <div style={ {
-                    ...GraphStyle,
-                    width: width+'px',
-                    height: height+'px',
-                } }>
+            <div    style={ {
+                        ...GraphStyle,
+                        width: width+'px',
+                        height: height+'px',
+                    } }
+
+                    onMouseDown = { event => this.mouseDown(event) }
+                    onMouseMove = { event => this.mouseMove(event) }
+                    onMouseUp = { event => this.mouseUp(event) }
+                >
 
                 <svg width={ width } height={ height }>
 
-                    <Grid width={ width  } height={ height } />
+                    <Grid width={ width  } height={ height } scale={ scale }/>
 
-                    <g transform={ `scale(0.8) translate(${ width*0.1 }, ${ height*0.1 })` }>
+                    <g transform={ `scale(0.8) translate(${ width*(1-scale)*0.5 }, ${ height*(1-scale)*0.5 })` }>
 
                     {events.map( x =>
                         x != selected && <Curve  key={x}
                                 event={x}
                                 color={colorByEvent[ x ]}
-                                {...this.state}
                                 width={width}
                                 height={height}  />  )}
 
@@ -57,7 +93,6 @@ export class Graph extends Component {
                         type="fat"
                         event={selected}
                         color={colorByEvent[ selected ]}
-                        {...this.state}
                         width={width}
                         height={height} />}
 
