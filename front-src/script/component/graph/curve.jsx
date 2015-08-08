@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from "react"
 import {renderFat, renderBasic} from "./curveBuilder.jsx"
+import {interpolateThenTremble, tremble} from "./lineDisturbance"
 
 const computeLine = function( ){
 
@@ -13,7 +14,10 @@ const computeLine = function( ){
             y: p.y * height
         })  )
 
-    this.setState({line: line})
+    this._cancelTremble && this._cancelTremble()
+
+    this._cancelTremble = tremble( line, disturbedLine =>
+        this.setState({line: disturbedLine}) )
 }
 
 
