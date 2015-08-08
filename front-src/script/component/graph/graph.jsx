@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 
-import {Grid} from './grid.jsx'
+import {Grid} from './grid/grid.jsx'
 import {Curve} from './curve.jsx'
 
 

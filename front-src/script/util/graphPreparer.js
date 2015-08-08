@@ -1,4 +1,47 @@
 
+export const troncate = ( points, start, end ) => {
+
+    if ( !points.length )
+        return points
+
+    if ( points.length == 1 )
+        return [{
+            x: Math.min( Math.max( points[ 0 ].x, start ), end ),
+            y: points[ 0 ].y
+        }]
+
+    ;[
+        [start, 1 ],
+        [end, -1 ],
+
+    ].forEach( x => {
+
+        let [ limit, v ] = x
+
+        let s =  v == 1 ? 0 : points.length-1
+        while( ( v == 1 ) == ( points[ s ].x < limit ) )
+            s += v
+
+
+        let ia = s-v
+        let ib = s
+
+        let a = points[ ia ]
+        let b = points[ ib ]
+
+        if ( !a || !b )
+            return
+
+        v == -1 ? points.splice( ia+1, Infinity ) : points.splice( 0, ia )
+
+        const t = (a.x - limit)/(a.x - b.x)
+        a.y = t * b.y + (1-t) * a.y
+        a.x = limit
+    })
+
+    return points
+}
+
 export const computeLine = ( points, packBy, packOrigin, start, end ) => {
 
     // round the born to the closer packOrigin
@@ -29,21 +72,7 @@ export const computeLine = ( points, packBy, packOrigin, start, end ) => {
         })  )
 
     // cut the outside points
-    if ( output.length > 1 )
-
-        [
-            [0 ,1, 0 ],
-            [output.length-1, output.length-2, 1 ],
-
-        ].forEach( x => {
-
-            let a = output[ x[0] ]
-            let b = output[ x[1] ]
-
-            const t = (a.x - x[2])/(a.x - b.x)
-            a.y = t * b.y + (1-t) * a.y
-            a.x = x[2]
-        })
+    troncate( output, 0, 1)
 
     return output
 }
