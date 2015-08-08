@@ -4,9 +4,13 @@ import {computeTimeLine } from "../../../util/gridPreparer"
 
 const lineStyle = {
     stroke: '#333',
-    opacity: '0.5',
+    opacity: '0',
     fill: 'none',
     strokeWidth: 0.5
+}
+const bandStyle = {
+    fill: 'rgba(0,0,0, 0.08)',
+    stroke: 'none',
 }
 const textStyle = {
     fill: '#fff',
@@ -36,7 +40,7 @@ export class HorizontalAxe extends Component {
         this._update = () => {
 
             this.setState({
-                timeLine : computeTimeLine(
+                ...computeTimeLine(
                     camera.start,
                     camera.end,
                     camera.packBy,
@@ -68,32 +72,78 @@ export class HorizontalAxe extends Component {
 
         const scale = this.props.scale
 
-        const top = this.props.height * (1-scale) * 0.5
-        const bot = this.props.height - top
+        let top = this.props.height * (1-scale) * 0.5
+        let bot = this.props.height - top
         const marge = top
+
+        top-= 20
+        bot+= 20
 
         const start = this.state.start
         const end = this.state.end
 
-        const timeLine = this.state.timeLine
+        const intervalle = this.state.intervalle
+        const onScreenDelta = intervalle / (end - start) * this.props.width * scale
+
+        const proj = x =>
+            ( 0.5 * (1-scale) + scale * (x - start)/(end - start) )*this.props.width
+
+        const milestones = this.state.milestones
             .map( x => ({
 
                 label: x.label,
-                x: ( 0.5 * (1-scale) + scale * (x.date - start)/(end - start) )*this.props.width,
-
+                x: proj( x.date )
             })    )
+
+        const bars = this.state.milestones
+            .concat( [
+                {date: this.state.milestones.slice(-1)[0].date + intervalle },
+                {date: this.state.milestones.slice( 0)[0].date - intervalle },
+                {date: this.state.milestones.slice( 0)[0].date - 2*intervalle },
+                {date: this.state.milestones.slice(-1)[0].date + 2*intervalle },
+             ] )
+            .filter( x =>
+                ( 0 | ( x.date / intervalle ) ) % 2 )
+            .map( o => {
+
+                const margeWidth = this.props.width * (1-scale) * 0.5
+
+                // position of the band which cross the graph limit when the fading start
+                const po = 0.2
+
+                let outside = 0
+
+                if ( o.date - intervalle * (1-po) < start )
+                    outside = start - ( o.date - intervalle * (1-po) )
+
+                if ( o.date - intervalle * po > end )
+                    outside = ( o.date - intervalle * po ) - end
+
+
+                outside = outside / (end - start)
+
+                return {
+                    x: proj( o.date ),
+                    o: Math.max(0, 1-outside * 10 )
+                }
+            })
+
 
         return (
             <g>
-                {timeLine.map( x =>
-                    <line
-                        y1={top}
-                        y2={bot}
-                        x1={ x.x }
-                        x2={ x.x }
-                        style={lineStyle}/>
-                )}
-                {timeLine.map( x =>
+
+                {bars
+                    .map( o =>
+                        <rect
+                            y={top}
+                            x={ o.x - onScreenDelta }
+                            width={ onScreenDelta }
+                            height={ bot-top }
+                            style={ {...bandStyle, opacity:o.o} }/>
+                    )
+                }
+
+                {milestones.map( x =>
                     <text
                         y={ bot +marge *0.5 }
                         x={ x.x - 10 }

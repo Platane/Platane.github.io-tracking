@@ -209,7 +209,7 @@ export const computeTimeLine = ( start, end, packBy, wishedIntervalle = 5 ) => {
 
 
     // fill
-    let timeLine = []
+    let milestones = []
 
     let last = new Date( 0 )
     let c = first
@@ -217,7 +217,7 @@ export const computeTimeLine = ( start, end, packBy, wishedIntervalle = 5 ) => {
     while( c.getTime() < end*1000 ){
 
         // push
-        timeLine.push({
+        milestones.push({
 
             // get a proper label
             label: labelDate( unit.label, c, last ),
@@ -248,7 +248,10 @@ export const computeTimeLine = ( start, end, packBy, wishedIntervalle = 5 ) => {
 
     }
 
-    return timeLine
+    return {
+        milestones: milestones,
+        intervalle: intervalle
+    }
 }
 
 
