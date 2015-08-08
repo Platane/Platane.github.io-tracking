@@ -15,7 +15,10 @@ export class App extends Component {
         super()
 
         this.state = {
-            selected: null
+            selected: null,
+
+            width:0,
+            height:0,
         }
     }
 
@@ -27,11 +30,21 @@ export class App extends Component {
         this.props.selectedStore.on('change', this._update )
 
         this._update()
+
+
+
+        this._updateSize = () =>
+            this.setState({ width: window.innerWidth, height: window.innerHeight })
+
+        window.addEventListener('resize', this._updateSize)
+        this._updateSize()
     }
 
     componentWillUnmount(){
 
         this.props.selectedStore.off('change', this._update )
+
+        window.removeEventListener('resize', this._updateSize)
     }
 
     getChildContext() {
@@ -44,7 +57,7 @@ export class App extends Component {
     render(){
         return (
 
-            <Graph selected={this.state.selected} width={1100} height={800}/>
+            <Graph {...this.state}/>
 
         )
     }

@@ -172,7 +172,12 @@ export const computeTimeLine = ( start, end, packBy, wishedIntervalle = 5 ) => {
                 if (last.getDate() == c.getDate())
                     break
 
-                label += ' '+c.getDate()+'/'+literalMonth[ c.getMonth() ]
+                label += c.getDate()
+
+                if (last.getMonth() == c.getMonth())
+                    break
+
+                label += '  '+literalMonth[ c.getMonth() ]
 
                 if (c.getFullYear() == c.getFullYear())
                     break
@@ -182,7 +187,12 @@ export const computeTimeLine = ( start, end, packBy, wishedIntervalle = 5 ) => {
                 break
 
             case 'day':
-                label = ' '+c.getDate()+'/'+literalMonth[ c.getMonth() ]
+                label = c.getDate()
+
+                if (last.getMonth() == c.getMonth())
+                    break
+
+                label += '  '+literalMonth[ c.getMonth() ]
 
                 if (last.getFullYear() == c.getFullYear())
                     break

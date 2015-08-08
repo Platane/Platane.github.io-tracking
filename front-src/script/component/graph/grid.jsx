@@ -48,23 +48,12 @@ class HorizontalAxe extends Component {
 
         this._update = () => {
 
-            let l = computeTimeLine(
-                    camera.start,
-                    camera.end,
-                    camera.packBy,
-                    this.props.width/ 180 )
-            if(!l || !l.length)
-                debugger
-
-            if ( l.filter( x => x.date < camera.start || x.date > camera.end).length )
-                debugger
-
             this.setState({
                 timeLine : computeTimeLine(
                     camera.start,
                     camera.end,
                     camera.packBy,
-                    this.props.width/ 180 ),
+                    this.props.width/ 200 ),
                 start: camera.start,
                 end: camera.end,
                 })
@@ -82,6 +71,10 @@ class HorizontalAxe extends Component {
         camera.removeListener('change', this._update )
     }
 
+    componentWillReceiveProps( nextProps ){
+        this.props.width != nextProps.width && this._update()
+    }
+
     render(){
 
 
@@ -94,13 +87,6 @@ class HorizontalAxe extends Component {
 
         const start = this.state.start
         const end = this.state.end
-
-
-        if ( !this.state.timeLine.length )
-            debugger
-
-        if ( this.state.timeLine.filter( x => x.date < start || x.date > end).length )
-            debugger
 
         const timeLine = this.state.timeLine
             .map( x => ({

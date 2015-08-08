@@ -12,13 +12,13 @@ export const renderFat = ( points, options = {} ) => {
     const darkColor = options.darkColor || '#ccc'
 
     let extrudDir = {x:0, y:-1}
-    let shadowDir = {x:0.707, y:0.707}
+    let shadowDir = {x:0.01, y:0.907}
 
     extrudDir.x *= height
     extrudDir.y *= height
 
-    shadowDir.x *= 400
-    shadowDir.y *= 400
+    shadowDir.x *= 1000
+    shadowDir.y *= 1000
 
     // copy
     let line = points.slice()
@@ -34,16 +34,18 @@ export const renderFat = ( points, options = {} ) => {
     const upPath = line.reduce( (path, p) =>
         path + (p.x+extrudDir.x) +','+ (p.y+extrudDir.y) + ' ', '' )
 
-    const shadowPoly = (first.x+shadowDir.x) +','+ (first.y+shadowDir.y) + ' ' + bottomPath + (last.x+shadowDir.x) +','+ (last.y+shadowDir.y)
+    const shadowPoly =  (first.x+shadowDir.x) +','+ (first.y +shadowDir.y) + ' ' +
+                        bottomPath + ' ' +
+                        (last.x+shadowDir.x) +','+ (last.y +shadowDir.y)
 
 
     return (
         <g>
 
             <defs>
-                <linearGradient id="shadow" x1="0" y1="0" x2="0.6" y2="0.6">
+                <linearGradient id="shadow" x1="0" y1="0" x2="0.3" y2="1">
                     <stop stopColor="rgb(50,50,50)" stopOpacity="0.25" offset="0%"/>
-                    <stop stopColor="rgb(50,50,50)" stopOpacity="0" offset="100%"/>
+                    <stop stopColor="rgb(50,50,50)" stopOpacity="0" offset="50%"/>
                 </linearGradient>
             </defs>
 

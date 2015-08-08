@@ -55,7 +55,7 @@ export class Graph extends Component {
 
         const { width, height, selected } = this.props
 
-        const scale = 0.7
+        const scale = 0.74
 
         const innerWidth = width * scale
         const innerheight = height * scale
