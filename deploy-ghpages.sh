@@ -17,12 +17,9 @@ cp ./front-dist/* ./
 cp ./front-src/index.html ./
 
 # keep ignoring files
-# /!\ please do it
-git checkout gh-pages -- ./gitignore
-git checkout gh-pages -- ./gitignore
-git checkout gh-pages -- ./gitignore
+printf "\nfront-dist\nfront-src\nrun.js\nwebpack.config.js\n.gitignore-ghpages\ndeploy-ghpages.sh\nnode_modules\nnpm-debug.log" > .gitignore
 git rm -r --cached .
-# /!\ can't do git add . here because the .sh script is running, 
+# /!\ can't do git add . here because the .sh script is running,
 #   it will fail with no permission as the file is locked
 #   let's add everything but the .sh script
 git add ./*.js
