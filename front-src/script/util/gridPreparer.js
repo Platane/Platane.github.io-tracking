@@ -58,6 +58,72 @@ const availableIntervalles = [
     12*30.5*24*3600,
 ]
 
+const labelDate = ( unit, date, lastDate ) => {
+
+    let label = ''
+    switch( unit ) {
+        case 'minutes':
+            label = date.getHours() +'h '+ date.getMinutes()
+            if (lastDate.getDate() == date.getDate())
+                break
+
+            label += ' '+date.getDate()+'/'+literalMonth[ date.getMonth() ]
+
+            if (lastDate.getFullYear() == date.getFullYear())
+                break
+
+            label += ' '+date.getFullYear()
+
+            break
+
+        case 'hour':
+            label = date.getHours()+'h'
+            if (lastDate.getDate() == date.getDate())
+                break
+
+            label += date.getDate()
+
+            if (lastDate.getMonth() == date.getMonth())
+                break
+
+            label += '  '+literalMonth[ date.getMonth() ]
+
+            if (date.getFullYear() == date.getFullYear())
+                break
+
+            label += ' '+date.getFullYear()
+
+            break
+
+        case 'day':
+            label = date.getDate()
+
+            if (lastDate.getMonth() == date.getMonth())
+                break
+
+            label += '  '+literalMonth[ date.getMonth() ]
+
+            if (lastDate.getFullYear() == date.getFullYear())
+                break
+
+            label += ' '+date.getFullYear()
+
+            break
+
+        case 'month' :
+            label = literalMonth[ date.getMonth() ]
+
+            if (lastDate.getFullYear() == date.getFullYear())
+                break
+
+            label += ' '+date.getFullYear()
+
+            break
+    }
+
+    return label
+}
+
 export const computeTimeLine = ( start, end, packBy, wishedIntervalle = 5 ) => {
 
     // degenerate cases handling
@@ -150,71 +216,11 @@ export const computeTimeLine = ( start, end, packBy, wishedIntervalle = 5 ) => {
 
     while( c.getTime() < end*1000 ){
 
-        // get a proper label
-        let label = ''
-        switch( unit.label ) {
-            case 'minutes':
-                label = c.getHours() +'h '+ c.getMinutes()
-                if (last.getDate() == c.getDate())
-                    break
-
-                label += ' '+c.getDate()+'/'+literalMonth[ c.getMonth() ]
-
-                if (last.getFullYear() == c.getFullYear())
-                    break
-
-                label += ' '+c.getFullYear()
-
-                break
-
-            case 'hour':
-                label = c.getHours()+'h'
-                if (last.getDate() == c.getDate())
-                    break
-
-                label += c.getDate()
-
-                if (last.getMonth() == c.getMonth())
-                    break
-
-                label += '  '+literalMonth[ c.getMonth() ]
-
-                if (c.getFullYear() == c.getFullYear())
-                    break
-
-                label += ' '+c.getFullYear()
-
-                break
-
-            case 'day':
-                label = c.getDate()
-
-                if (last.getMonth() == c.getMonth())
-                    break
-
-                label += '  '+literalMonth[ c.getMonth() ]
-
-                if (last.getFullYear() == c.getFullYear())
-                    break
-
-                label += ' '+c.getFullYear()
-
-                break
-
-            case 'month' :
-                label = literalMonth[ c.getMonth() ]
-
-                if (last.getFullYear() == c.getFullYear())
-                    break
-
-                label += ' '+c.getFullYear()
-
-                break
-        }
-
         // push
         timeLine.push({
-            label: label,
+
+            // get a proper label
+            label: labelDate( unit.label, c, last ),
             date: c.getTime() / 1000
         })
 
@@ -245,6 +251,74 @@ export const computeTimeLine = ( start, end, packBy, wishedIntervalle = 5 ) => {
     return timeLine
 }
 
-export const computeGridValue = ( start, end, packBy ) => {
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+export const computeScale = ( maxY, wishedIntervalle = 3 ) => {
+
+    // big one algo
+    // one of the X number dsiplayed should be a round one
+
+    const n = 0| Math.log( maxY )/Math.log( 10 )
+
+    const primal = 0| ( maxY / Math.pow( 10, n ) )
+
+    let bigOne = primal * Math.pow( 10, n )
+
+    if ( primal < 2 ) {
+
+        const second = (0| ( maxY / Math.pow( 10, n-1 ) )) % 10
+
+        bigOne += second * Math.pow( 10, n-1 )
+    }
+    else if ( primal < 5 ) {
+
+        let second = (0| ( maxY / Math.pow( 10, n-1 ) )) % 10
+
+        second = ( 0| (second / 5 ) ) * 5
+
+        bigOne += second * Math.pow( 10, n-1 )
+    }
+
+    return [
+        {
+            label: bigOne,
+            y: bigOne / maxY,
+            division: 0,
+        },
+    ]
 }

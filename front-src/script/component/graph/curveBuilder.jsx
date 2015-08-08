@@ -44,7 +44,7 @@ export const renderFat = ( points, options = {} ) => {
 
             <defs>
                 <linearGradient id="shadow" x1="0" y1="0" x2="0.3" y2="1">
-                    <stop stopColor="rgb(50,50,50)" stopOpacity="0.25" offset="0%"/>
+                    <stop stopColor="rgb(50,50,50)" stopOpacity="0" offset="0%"/>
                     <stop stopColor="rgb(50,50,50)" stopOpacity="0" offset="50%"/>
                 </linearGradient>
             </defs>

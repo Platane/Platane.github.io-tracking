@@ -1,18 +1,5 @@
 import React, {Component, PropTypes} from "react"
-import {computeTimeLine } from "../../util/gridPreparer"
-
-
-export class Grid extends Component {
-
-    render(){
-        return (
-            <g>
-                <HorizontalAxe {...this.props}/>
-            </g>
-        )
-    }
-}
-
+import {computeTimeLine } from "../../../util/gridPreparer"
 
 
 const lineStyle = {
@@ -27,7 +14,7 @@ const textStyle = {
     fontSize: 16,
     fontFamily: "helvetica"
 }
-class HorizontalAxe extends Component {
+export class HorizontalAxe extends Component {
 
 
     static contextTypes = {
@@ -38,7 +25,7 @@ class HorizontalAxe extends Component {
         super()
 
         this.state = {
-            timeLine: {}
+            timeLine: []
         }
     }
 
