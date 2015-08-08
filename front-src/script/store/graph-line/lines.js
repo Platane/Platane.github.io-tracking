@@ -15,23 +15,21 @@ const recomputeLines = function(){
         this.computedLines[ event ] = computeLine(
                 pointsStore.getPoints( event ),
                 graphCameraStore.packBy,
+                graphCameraStore.packOrigin,
                 graphCameraStore.start,
                 graphCameraStore.end )
     )
 
     const maxY = events
     .reduce( (max,event) => Math.max( max,
-        this.computedLines[ event ].reduce( (max,x) => Math.max( max, x )  ,0)
+        this.computedLines[ event ].reduce( (max, p) => Math.max( max, p.y )  ,0)
         )
-    ,0)
+    ,1)
 
     events
     .forEach( event =>
-        this.computedLines[ event ] = this.computedLines[ event ]
-        .map( (y,x) => ({
-            x: x/this.computedLines[ event ].length,
-            y: 1-y/maxY
-        }) )
+        this.computedLines[ event ].forEach( p =>
+            p.y =1- p.y/maxY )
     )
 
     graphCameraStore.maxY = maxY
@@ -51,7 +49,7 @@ const register = function(stores, dispatcher){
             recomputeLines.call(this)
             break
 
-        case 'setGraphCamera' :
+        case 'translateGraphCamera' :
             dispatcher.waitFor( [stores.graphCameraStore.token] )
 
             recomputeLines.call(this)

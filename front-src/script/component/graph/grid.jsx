@@ -24,8 +24,8 @@ const lineStyle = {
 const textStyle = {
     fill: '#fff',
     stroke: 'none',
-    fontSize: 12,
-    fontFamily: "Verdana"
+    fontSize: 16,
+    fontFamily: "helvetica"
 }
 class HorizontalAxe extends Component {
 

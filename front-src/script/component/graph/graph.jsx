@@ -55,7 +55,7 @@ export class Graph extends Component {
 
         const { width, height, selected } = this.props
 
-        const scale = 0.8
+        const scale = 0.7
 
         const innerWidth = width * scale
         const innerheight = height * scale
@@ -80,7 +80,7 @@ export class Graph extends Component {
 
                     <Grid width={ width  } height={ height } scale={ scale }/>
 
-                    <g transform={ `scale(0.8) translate(${ width*(1-scale)*0.5 }, ${ height*(1-scale)*0.5 })` }>
+                    <g transform={ `translate(${ width*(1-scale)*0.5 }, ${ height*(1-scale)*0.5 }) scale(${scale})` }>
 
                     {events.map( x =>
                         x != selected && <Curve  key={x}

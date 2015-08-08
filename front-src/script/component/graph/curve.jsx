@@ -22,6 +22,7 @@ export class Curve extends Component {
 
     static contextTypes = {
         graphLinesStore: PropTypes.object,
+        graphCameraStore: PropTypes.object,
     }
 
     constructor(){

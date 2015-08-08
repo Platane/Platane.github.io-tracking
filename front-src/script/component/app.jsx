@@ -44,7 +44,7 @@ export class App extends Component {
     render(){
         return (
 
-            <Graph selected={this.state.selected} width={500} height={500}/>
+            <Graph selected={this.state.selected} width={1100} height={800}/>
 
         )
     }

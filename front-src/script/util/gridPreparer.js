@@ -1,4 +1,20 @@
 
+
+const literalMonth = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+]
+
 const duration = {
     'minute' : 60,
     'hour' : 3600,
@@ -101,26 +117,30 @@ export const computeTimeLine = ( start, end, packBy, wishedIntervalle = 5 ) => {
             break
 
         case 'month' :
+
             let m = Math.floor( (startDate.getMonth()+1)  / mult ) * mult -1
             let y = first.getFullYear()
             first.setMinutes( 0 )
             first.setHours( 0 )
 
-            first.setFullYear( y + 0|(m/12) )
+            first.setFullYear( y + (0|(m/12)) )
             first.setMonth(m%12)
             first.setDate( 1 )
 
-            while( startDate> first ){
+            // TODO something is fucked here
+            while( startDate.getTime()> first.getTime() ){
 
                 m += mult
 
-                first.setFullYear( y + 0|(m/12) )
+                first.setFullYear( y + (0|(m/12)) )
                 first.setMonth(m%12)
                 first.setDate( 1 )
             }
 
             break
     }
+
+
 
     // fill
     let timeLine = []
@@ -138,7 +158,7 @@ export const computeTimeLine = ( start, end, packBy, wishedIntervalle = 5 ) => {
                 if (last.getDate() == c.getDate())
                     break
 
-                label += ' '+c.getDate()+'/'+(c.getMonth()+1)
+                label += ' '+c.getDate()+'/'+literalMonth[ c.getMonth() ]
 
                 if (last.getFullYear() == c.getFullYear())
                     break
@@ -152,7 +172,7 @@ export const computeTimeLine = ( start, end, packBy, wishedIntervalle = 5 ) => {
                 if (last.getDate() == c.getDate())
                     break
 
-                label += ' '+c.getDate()+'/'+(c.getMonth()+1)
+                label += ' '+c.getDate()+'/'+literalMonth[ c.getMonth() ]
 
                 if (c.getFullYear() == c.getFullYear())
                     break
@@ -162,7 +182,7 @@ export const computeTimeLine = ( start, end, packBy, wishedIntervalle = 5 ) => {
                 break
 
             case 'day':
-                label = ' '+c.getDate()+'/'+(c.getMonth()+1)
+                label = ' '+c.getDate()+'/'+literalMonth[ c.getMonth() ]
 
                 if (last.getFullYear() == c.getFullYear())
                     break
@@ -172,7 +192,7 @@ export const computeTimeLine = ( start, end, packBy, wishedIntervalle = 5 ) => {
                 break
 
             case 'month' :
-                label = c.getMonth()+1
+                label = literalMonth[ c.getMonth() ]
 
                 if (last.getFullYear() == c.getFullYear())
                     break
@@ -201,7 +221,7 @@ export const computeTimeLine = ( start, end, packBy, wishedIntervalle = 5 ) => {
             case 'month':
                 c = new Date( c.getTime() )
                 let m = c.getMonth()+mult
-                c.setFullYear( c.getFullYear() + 0|(m/12) )
+                c.setFullYear( c.getFullYear() + (0|(m/12)) )
                 c.setMonth( m%12 )
                 break
 
@@ -211,8 +231,6 @@ export const computeTimeLine = ( start, end, packBy, wishedIntervalle = 5 ) => {
         }
 
     }
-
-    console.log( timeLine )
 
     return timeLine
 }
