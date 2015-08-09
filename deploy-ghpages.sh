@@ -21,7 +21,16 @@ cp ./front-src/index.html ./
 # keep ignoring files
 printf "front-dist\nfront-src\nrun.js\nwebpack.config.js\n.gitignore-ghpages\nnode_modules\nnpm-debug.log\nREADME.md" > .gitignore
 git rm -r --cached .
-git add .
+# /!\ can't do git add . here because the .sh script is running,
+#   it will fail with no permission as the file is locked
+#   let's add everything but the .sh script
+git add ./*.js
+git add ./*.html
+git add ./.gitignore
+git add ./package.json
+# because ./*.js does not seems to work
+git add ./script.js
+
 
 # commit and push
 git commit -m "deploy"
