@@ -3,17 +3,17 @@ import { Dispatcher } from 'flux'
 import * as React from 'react'
 
 
-import { Camera as GraphCameraStore } from './store/graph-camera/camera'
-import { Lines as GraphLinesStore  } from './store/graph-line/lines'
-import { Points as PointsStore  } from './store/points/points'
-import { Selected as SelectedStore  } from './store/selected/selected'
-
 let dispatcher = new Dispatcher()
+
+
 let context = {}
-context.graphCameraStore  = new GraphCameraStore( context, dispatcher )
-context.graphLinesStore  = new GraphLinesStore( context, dispatcher )
-context.pointsStore  = new PointsStore( context, dispatcher )
-context.selectedStore = new SelectedStore( context, dispatcher )
+context.pointsStore                     = new (require('./store/points/points').Points  )( context, dispatcher )
+context.selectedStore                   = new (require('./store/selected/selected').Selected  )( context, dispatcher )
+
+context.graphCameraStore                = new (require('./store/graph-camera/camera').Camera  )( context, dispatcher )
+context.graphLinesStore                 = new (require('./store/graph-line/lines').Lines  )( context, dispatcher )
+context.graphDisturbedLinesStore        = new (require('./store/graph-disturbed-line/lines').Lines  )( context, dispatcher )
+context.graphMotionStore                   = new (require('./store/graph-motion/motion').Motion  )( context, dispatcher )
 
 import { Action as Action  } from './action/action'
 

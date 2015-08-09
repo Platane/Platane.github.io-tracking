@@ -26,6 +26,10 @@ export class Graph extends Component {
         action: PropTypes.object,
     }
 
+    componentWillMount(){
+        window.addEventListener('mouseup', this.mouseUp.bind( this ) )
+    }
+
     mouseDown( event ){
         this._originX = event.pageX
         this._dragging = true
@@ -47,6 +51,8 @@ export class Graph extends Component {
         this.context.action.translateGraphCamera( newStart )
     }
     mouseUp( event ){
+        if ( !this._dragging )
+            return
         this._dragging = false
         this.context.action.endMovingGraphCamera()
     }

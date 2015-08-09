@@ -323,5 +323,10 @@ export const computeScale = ( maxY, wishedIntervalle = 3 ) => {
             y: bigOne / maxY,
             division: 0,
         },
+        {
+            label: 0,
+            y: 0,
+            division: 0,
+        },
     ]
 }

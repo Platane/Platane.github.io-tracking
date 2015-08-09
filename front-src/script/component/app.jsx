@@ -9,6 +9,7 @@ export class App extends Component {
         graphCameraStore: PropTypes.object,
         pointsStore: PropTypes.object,
         selectedStore: PropTypes.object,
+        graphDisturbedLinesStore: PropTypes.object,
     }
 
     constructor(){

@@ -1,32 +1,13 @@
 import React, {Component, PropTypes} from "react"
 import {renderFat, renderBasic} from "./curveBuilder.jsx"
-import {interpolateThenTremble, tremble} from "./lineDisturbance"
 
-const computeLine = function( ){
-
-    const { event, width, height } = this.props
-    const { graphLinesStore } = this.context
-
-    const line = graphLinesStore
-        .getComputedLine( event )
-        .map( p => ({
-            x: p.x * width,
-            y: p.y * height
-        })  )
-
-    this._cancelTremble && this._cancelTremble()
-
-    this._cancelTremble = tremble( line, disturbedLine =>
-        this.setState({line: disturbedLine}) )
-}
 
 
 export class Curve extends Component {
 
 
     static contextTypes = {
-        graphLinesStore: PropTypes.object,
-        graphCameraStore: PropTypes.object,
+        graphDisturbedLinesStore: PropTypes.object,
     }
 
     constructor(){
@@ -40,32 +21,39 @@ export class Curve extends Component {
     componentWillMount(){
 
         this._update = () =>
-            computeLine.call( this )
+            this.setState({
+                line: this.context.graphDisturbedLinesStore.getLine( this.props.event ) })
 
-        this.context.graphLinesStore.on('change', this._update )
+        this.context.graphDisturbedLinesStore.on('change', this._update )
 
-        computeLine.call( this )
+        this._update()
     }
 
     componentWillUnmount(){
 
-        this.context.graphLinesStore.removeListener('change', this._update )
+        this.context.graphDisturbedLinesStore.removeListener('change', this._update )
     }
 
     componentWillReceiveProps( nextProps ){
 
         this.props= nextProps
 
-        computeLine.call( this )
+        this._update()
     }
 
     render(){
+
+        const line = this.state.line.map( p => ({
+                x: p.x * this.props.width,
+                y: p.y * this.props.height
+            }) )
+
         switch ( this.props.type ) {
         case 'fat' :
-            return renderFat( this.state.line, {color: this.props.color} )
+            return renderFat( line, {color: this.props.color} )
         case 'basic' :
         default :
-            return renderBasic( this.state.line, {color: this.props.color} )
+            return renderBasic( line, {color: this.props.color} )
         }
     }
 }

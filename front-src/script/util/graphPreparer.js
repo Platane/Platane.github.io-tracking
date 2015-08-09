@@ -68,7 +68,7 @@ export const computeLine = ( points, packBy, packOrigin, start, end ) => {
     .map( (x, i) =>
         ({
             x: ( _start + ( i * packBy ) - start )/( end - start ),
-            y: x
+            y: x,
         })  )
 
     // cut the outside points

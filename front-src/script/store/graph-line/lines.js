@@ -25,11 +25,13 @@ const recomputeLines = function(){
                 0.95 )
     )
 
-    const maxY = events
+    let maxY = events
     .reduce( (max,event) => Math.max( max,
         this.computedLines[ event ].reduce( (max, p) => Math.max( max, p.y )  ,0)
         )
     ,1)
+
+    maxY = Math.max( 0|graphCameraStore.maxY, maxY )
 
     events
     .forEach( event =>
@@ -76,7 +78,7 @@ export class Lines extends EventEmitter {
         register.call( this, stores, dispatcher )
     }
 
-    getComputedLine( event ){
+    getLine( event ){
         return this.computedLines[ event ] || []
     }
 }
