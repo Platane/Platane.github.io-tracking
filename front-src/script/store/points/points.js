@@ -7,6 +7,7 @@ const register = function(stores, dispatcher){
         case 'hydratePoint' :
 
             this.points = data.points
+            this.emit('change')
             break
         }
     })

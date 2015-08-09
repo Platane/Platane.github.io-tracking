@@ -22,6 +22,17 @@ export class Graph extends Component {
 
     componentWillMount(){
         window.addEventListener('mouseup', this.mouseUp.bind( this ) )
+
+        this._update = () =>
+            this.setState({  events: this.context.pointsStore.getEvents()  })
+
+        this.context.pointsStore.on('change', this._update )
+
+        this._update()
+    }
+
+    componentWillUnmount(){
+        this.context.pointsStore.removeListener('change', this._update )
     }
 
     mouseDown( event ){
@@ -61,7 +72,7 @@ export class Graph extends Component {
         const innerWidth = width * scale
         const innerheight = height * scale
 
-        const events = this.context.pointsStore.getEvents()
+        const events = this.state.events
 
         const colorByEvent = events.reduce( (o, x, i) =>
             (o[ x ] = colorScheme[ i % colorScheme.length ]) && o, {})

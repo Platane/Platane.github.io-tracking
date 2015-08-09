@@ -10,6 +10,12 @@ const rootStyle = {
     width: '100%',
     height: '100%',
 }
+const footerStyle = {
+    fontFamily: 'helvetica',
+    position: 'absolute',
+    right: '10px',
+    bottom: '0',
+}
 
 export class App extends Component {
 
@@ -80,7 +86,7 @@ export class App extends Component {
         let literal = {}
         let layout
 
-        if ( width < 800 && width > 1.5 * height ) {
+        if ( width < 1000 && width > 1.5 * height ) {
             layout = 'row'
             literal.width = Math.min( 300, width * 0.3 )
             graph.width = width - literal.width
@@ -101,6 +107,15 @@ export class App extends Component {
                 <Graph selected = {this.state.selected} {...graph}/>
 
                 <Literal layout = {layout} />
+
+                <footer style={ footerStyle }>
+
+                    metrics for <a href="//platane.me">platane.me</a>
+
+                    &nbsp;&nbsp;
+
+                    <a href="//github.com/Platane/Platane.github.io-tracking">GitHub</a>
+                </footer>
             </div>
         )
     }
