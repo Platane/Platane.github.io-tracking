@@ -19,7 +19,7 @@ cp ./front-dist/* ./
 cp ./front-src/index.html ./
 
 # keep ignoring files
-printf "\nfront-dist\nfront-src\nrun.js\nwebpack.config.js\n.gitignore-ghpages\nnode_modules\nnpm-debug.log\nREADME.md" > .gitignore
+printf "front-dist\nfront-src\nrun.js\nwebpack.config.js\n.gitignore-ghpages\nnode_modules\nnpm-debug.log\nREADME.md" > .gitignore
 git rm -r --cached .
 # /!\ can't do git add . here because the .sh script is running,
 #   it will fail with no permission as the file is locked
