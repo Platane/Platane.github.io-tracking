@@ -27,7 +27,7 @@
         "postinstall": "node ./node_modules/webpack/bin/webpack.js --production",
         "start": "node run.js",
         "dev": "node ./node_modules/webpack/bin/webpack.js --progress --watch -d",
-        "deploy-ghpages": "bash deploy-ghpages.sh"
+        "deploy-ghpages": "bash deploy-ghpages.sh; git checkout"
     }
 
 }
