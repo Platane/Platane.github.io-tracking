@@ -9,7 +9,7 @@ const lineStyle = {
     strokeWidth: 0.5
 }
 const bandStyle = {
-    fill: 'rgba(0,0,0, 0.08)',
+    fill: 'rgba(0,0,0, 0.075)',
     stroke: 'none',
 }
 const textStyle = {

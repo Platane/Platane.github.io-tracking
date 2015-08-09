@@ -93,7 +93,10 @@ var app = express()
 app.get(/^\/tracking\/([0-9A-z_-]+)\.png$/, function(req, res){
     var event = req.params[0]
     Mongo.insertEvent( event )
-    res.status(200).send()
+    res
+    .header({'Cache-Control': 'max-age='+(3600*24) })
+    .status(200)
+    .send()
 })
 
 // get stats route
