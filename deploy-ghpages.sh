@@ -37,4 +37,4 @@ git commit -m "deploy"
 git push
 
 # back to master
-# git checkout master
+git checkout master
