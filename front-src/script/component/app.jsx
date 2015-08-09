@@ -86,7 +86,7 @@ export class App extends Component {
         let literal = {}
         let layout
 
-        if ( width < 1000 && width > 1.5 * height ) {
+        if ( width > 1.5 * height ) {
             layout = 'row'
             literal.width = Math.min( 300, width * 0.3 )
             graph.width = width - literal.width

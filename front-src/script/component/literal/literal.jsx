@@ -8,6 +8,7 @@ const listStyle = {
     listStyleType: 'none',
     alignItems: 'center',
     justifyContent: 'space-around',
+    margin: 0,
 
 }
 const sumStyle = {
@@ -25,7 +26,7 @@ const sumStyle = {
     backgroundColor: colorBack,
 
     textShadow: Array.apply(null, Array( 20 ))
-        .map( (_, i) => `${i}px ${i*0.5}px 1px #CD7E7E`) //#CD7E7E
+        .map( (_, i) => `${i}px ${i*0.5}px 1px rgb(154, 175, 71)`) //#CD7E7E
         .join(',')
 }
 
@@ -86,9 +87,20 @@ export class Literal extends Component {
         const colorByEvent = events.reduce( (o, x, i) =>
             (o[ x ] = colorScheme[ i % colorScheme.length ]) && o, {})
 
+        const s = {
+            row: {
+                boxShadow: '32px 0px 12px -30px rgba(50,50,50, 0.3) inset',
+                flexDirection: 'column',
+            },
+            column: {
+                boxShadow: '0px 32px 12px -30px rgba(50,50,50, 0.3) inset',
+                flexDirection: 'row',
+            }
+        }
+
         return (
 
-            <ul    style={ {...listStyle, flexDirection: layout == 'row' ? 'column' : 'row'} }>
+            <ul    style={ {...listStyle, ...s[ layout ] } }>
 
                 {events.map( x =>
                     <li  key={x} style={ {...sumStyle, color:colorByEvent[ x ]} } >{sums[ x ] || 0}</li>  )}

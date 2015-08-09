@@ -53,7 +53,7 @@ export class Curve extends Component {
             return renderFat( line, {color: this.props.color} )
         case 'basic' :
         default :
-            return renderBasic( line, {color: this.props.color} )
+            return renderBasic( line, {color: this.props.color, tickness: 2} )
         }
     }
 }

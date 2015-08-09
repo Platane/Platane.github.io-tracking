@@ -3,12 +3,11 @@ import React, {Component, PropTypes} from 'react'
 import {Grid} from './grid/grid.jsx'
 import {Curve} from './curve.jsx'
 
-import {colorScheme} from "../common/style.js"
+import {colorScheme, colorBack} from "../common/style.js"
 
 
 const GraphStyle = {
-    // border: 'solid 2px #333',
-    backgroundColor: '#d88'
+    backgroundColor: colorBack
 }
 
 export class Graph extends Component {

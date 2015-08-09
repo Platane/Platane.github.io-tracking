@@ -1,8 +1,8 @@
 export const colorScheme = [
     'white',
-    'cyan',
+    '#FFD602',
     'yellow',
 ]
 
 export const font = 'helvetica'
-export const colorBack = '#d88'
+export const colorBack = 'rgb(166, 191, 66)'
