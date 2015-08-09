@@ -13,7 +13,8 @@ context.selectedStore                   = new (require('./store/selected/selecte
 context.graphCameraStore                = new (require('./store/graph-camera/camera').Camera  )( context, dispatcher )
 context.graphLinesStore                 = new (require('./store/graph-line/lines').Lines  )( context, dispatcher )
 context.graphDisturbedLinesStore        = new (require('./store/graph-disturbed-line/lines').Lines  )( context, dispatcher )
-context.graphMotionStore                   = new (require('./store/graph-motion/motion').Motion  )( context, dispatcher )
+context.graphMotionStore                = new (require('./store/graph-motion/motion').Motion  )( context, dispatcher )
+context.literalSum                      = new (require('./store/literal-sum/sum').Sum  )( context, dispatcher )
 
 import { Action as Action  } from './action/action'
 

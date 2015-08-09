@@ -1,15 +1,30 @@
 import React, {Component, PropTypes} from "react"
 import { Graph } from './graph/graph.jsx'
+import { Literal } from './literal/literal.jsx'
+
+
+const rootStyle = {
+    display: 'flex',
+    alignItems: 'stretch',
+    justifyContent: 'flex-start',
+    width: '100%',
+    height: '100%',
+}
 
 export class App extends Component {
 
     static childContextTypes = {
         action: PropTypes.object,
-        graphLinesStore: PropTypes.object,
-        graphCameraStore: PropTypes.object,
+
         pointsStore: PropTypes.object,
         selectedStore: PropTypes.object,
+
+
+        graphCameraStore: PropTypes.object,
+        graphLinesStore: PropTypes.object,
         graphDisturbedLinesStore: PropTypes.object,
+
+        literalSum: PropTypes.object,
     }
 
     constructor(){
@@ -56,10 +71,37 @@ export class App extends Component {
     }
 
     render(){
+
+
+        // layout
+        const {width, height} = this.state
+
+        let graph = {}
+        let literal = {}
+        let layout
+
+        if ( width < 800 && width > 1.5 * height ) {
+            layout = 'row'
+            literal.width = Math.min( 300, width * 0.3 )
+            graph.width = width - literal.width
+
+            literal.height = graph.height = height
+
+        } else {
+            layout = 'column'
+            literal.height = Math.min( 300, height * 0.3 )
+            graph.height = height - literal.height
+
+            literal.width = graph.width = width
+        }
+
+
         return (
+            <div style= { {...rootStyle, flexDirection: layout } }>
+                <Graph selected = {this.state.selected} {...graph}/>
 
-            <Graph {...this.state}/>
-
+                <Literal layout = {layout} />
+            </div>
         )
     }
 }

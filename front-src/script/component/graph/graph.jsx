@@ -3,26 +3,20 @@ import React, {Component, PropTypes} from 'react'
 import {Grid} from './grid/grid.jsx'
 import {Curve} from './curve.jsx'
 
+import {colorScheme} from "../common/style.js"
+
 
 const GraphStyle = {
     // border: 'solid 2px #333',
     backgroundColor: '#d88'
 }
-const events =  [
-    'home-land',
-    'resume-land',
-    'work-land',
-]
-const colorScheme = [
-    'white',
-    'cyan',
-    'yellow',
-]
 
 export class Graph extends Component {
 
     static contextTypes = {
         graphCameraStore: PropTypes.object,
+        pointsStore: PropTypes.object,
+
         action: PropTypes.object,
     }
 
@@ -59,12 +53,15 @@ export class Graph extends Component {
 
     render(){
 
+
         const { width, height, selected } = this.props
 
         const scale = 0.74
 
         const innerWidth = width * scale
         const innerheight = height * scale
+
+        const events = this.context.pointsStore.getEvents()
 
         const colorByEvent = events.reduce( (o, x, i) =>
             (o[ x ] = colorScheme[ i % colorScheme.length ]) && o, {})
