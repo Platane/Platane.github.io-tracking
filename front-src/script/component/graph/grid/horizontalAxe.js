@@ -133,8 +133,9 @@ export class HorizontalAxe extends Component {
             <g>
 
                 {bars
-                    .map( o =>
+                    .map( (o, i) =>
                         <rect
+                            key={i}
                             y={top}
                             x={ o.x - onScreenDelta }
                             width={ onScreenDelta }
@@ -143,8 +144,9 @@ export class HorizontalAxe extends Component {
                     )
                 }
 
-                {milestones.map( x =>
+                {milestones.map( (x, i) =>
                     <text
+                        key={i}
                         y={ bot +marge *0.5 }
                         x={ x.x - 10 }
                         transform={`rotate(35 ${x.x + 10} ${bot +marge/2})`}

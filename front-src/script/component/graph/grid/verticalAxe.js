@@ -25,7 +25,7 @@ export class VerticalAxe extends Component {
         super()
 
         this.state = {
-            scale: []
+            scales: []
         }
     }
 
@@ -81,16 +81,18 @@ export class VerticalAxe extends Component {
 
         return (
             <g>
-                { marge > 60 && scales.map( o =>
+                { marge > 60 && scales.map( (o, i) =>
                     <line
+                        key={i}
                         y1={o.y}
                         y2={o.y}
                         x1={ textX + 45 }
                         x2={ Math.max( textX + 50,  marge * 0.8 ) }
                         style={lineStyle}/>
                 )}
-                {scales.map( o =>
+                {scales.map( (o, i) =>
                     <text
+                        key={i}
                         y={ o.y + 6 }
                         x={ textX }
                         style={textStyle}>{ o.label }</text>

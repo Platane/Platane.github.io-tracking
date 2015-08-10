@@ -13,6 +13,8 @@ export class Camera extends EventEmitter {
         this.packBy = 3600 * 24 * 7 * 1
         this.packOrigin = 0
 
+        this.maxY = 1
+
 
         this.token = dispatcher.register( resolve.bind ( this ) )
     }
