@@ -22,11 +22,12 @@ const sumStyle = {
     lineHeight: 2.6,
     boxSizing: 'border-box',
     textAlign: 'center',
+    overflow: 'hidden',
 
     backgroundColor: colorBack,
 
     textShadow: Array.apply(null, Array( 20 ))
-        .map( (_, i) => `${i}px ${i*0.5}px 1px rgb(154, 175, 71)`) //#CD7E7E
+        .map( (_, i) => `${i*3.6}px ${i*2.1}px 2px rgb(154, 175, 71)`) //#CD7E7E
         .join(',')
 }
 
