@@ -58,7 +58,7 @@ const availableIntervalles = [
     12*30.5*24*3600,
 ]
 
-const labelDate = ( unit, date, lastDate ) => {
+export const labelDate = ( unit, date, lastDate ) => {
 
     let label = ''
     switch( unit ) {

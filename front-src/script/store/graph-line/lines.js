@@ -13,16 +13,14 @@ const recomputeLines = function(){
     events
     .forEach( event =>
         this.computedLines[ event ] =
-            troncate(
                 computeLine(
                     pointsStore.getPoints( event ),
                     graphCameraStore.packBy,
                     graphCameraStore.packOrigin,
                     graphCameraStore.start,
-                    graphCameraStore.end )
-                ,
-                0.05,
-                0.95 )
+                    graphCameraStore.end,
+                    Date.now() / 1000
+                )
     )
 
     let maxY = events
