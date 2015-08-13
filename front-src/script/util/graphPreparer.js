@@ -86,9 +86,9 @@ export const computeLine = ( points, packBy, packOrigin, start, end, cutDate ) =
     while ( i-- && output[i].date - packBy * 0.5 > cutDate )
         ;
 
-    if ( i>=0 && i < output.length ) {
+    output.splice( i+1, Infinity )
 
-        output.splice( i+1, Infinity )
+    if ( i>=0 && i < output.length ) {
 
         // so ..
         // output[i].date - packBy * 0.5 < cutDate < output[i].date + packBy * 0.5
